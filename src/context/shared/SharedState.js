@@ -2,8 +2,9 @@ import React, {useReducer} from 'react';
 import SharedReducer from "./SharedReducer";
 
 import {CLEAR_ERROR, ERROR, LOADING} from "../types";
+import {SharedContext} from "./SharedContext";
 
-const SharedState = () => {
+const SharedState = ({children}) => {
 
     const [state, dispatch] = useReducer(SharedReducer, {})
 
@@ -14,10 +15,17 @@ const SharedState = () => {
         });
     };
 
-    return (
-        <div>
+    const error = payload => async dispatch => {
+        dispatch({
+            type: ERROR,
+            payload: payload
+        });
+    };
 
-        </div>
+    return (
+        <SharedContext.Provider>
+
+        </SharedContext.Provider>
     );
 };
 
