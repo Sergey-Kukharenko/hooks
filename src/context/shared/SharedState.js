@@ -24,7 +24,7 @@ const SharedState = ({children}) => {
 
     return (
         <SharedContext.Provider>
-
+            {children}
         </SharedContext.Provider>
     );
 };

@@ -7,7 +7,7 @@ function App() {
     return (
         <NotesState>
             <div className="App">
-                <h1>Title</h1>
+                <h1>I Love React</h1>
 
                 <List/>
             </div>
