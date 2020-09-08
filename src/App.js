@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+
+function computeInitialCounter() {
+    console.log('sd')
+    return Math.trunc(Math.random() * 20)
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    // useState вызываем ф-ию, которая обратится
+    // к computeInitialCounter() один раз
+    // Делается для того, чтобы каждый раз при рендеринге не вызывать ее повторно
+    const [counter, setCounter] = useState(() => {
+        return computeInitialCounter()
+    })
+
+    const [state, setState] = useState({
+        title: 'Счетчик',
+        date: Date.now()
+    })
+    // #1
+    //
+    // function increment() {
+    //     setCounter(counter + 1)
+    // }
+
+    // #2
+    function increment() {
+        // Такая запись не сработает!
+        // Так как useState - асинхронный
+
+        // setCounter(counter + 1)
+        // setCounter(counter + 1)
+
+        // Эта - сработает
+        setCounter((prev) => prev + 1)
+        setCounter((prev) => prev + 1)
+    }
+
+    // #3
+    function decrement() {
+        setCounter(counter - 1)
+    }
+
+    // !если не возвращать предыдущее состояние,
+    // то мы его вытерем и получим только новое поле
+
+    const updateTitle = () => {
+        setState(prev => {
+            return {
+                ...prev, // вернуть предыдущее состояние
+                title: 'Новое название'
+            }
+        })
+    }
+
+    return (
+        <div className="App">
+            <h1>Счетчик: {counter}</h1>
+            <button onClick={increment} className="btn btn-success">Добавить</button>
+            <button onClick={decrement} className="btn btn-danger">Убрать</button>
+            <button onClick={updateTitle} className="btn btn-default">Изменить название</button>
+
+            <pre>
+                {JSON.stringify(state, null, 2)}
+            </pre>
+        </div>
+    );
 }
 
 export default App;
