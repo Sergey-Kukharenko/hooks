@@ -10,14 +10,7 @@ const NotesState = ({children}) => {
 
     const fetchNotes = async () => {
         const payload = data;
-
-
-        try {
-            dispatch({type: FETCH_NOTES, payload})
-            
-        } catch (error) {
-
-        }
+        dispatch({type: FETCH_NOTES, payload})
     }
 
     return (
